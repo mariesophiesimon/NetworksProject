@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="14497089-5f01-45d8-873f-024c5af676aa" name="Default Changelist" comment="" />
+    <list default="true" id="14497089-5f01-45d8-873f-024c5af676aa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/btcp/client_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/client_socket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/btcp/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/btcp/server_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/server_socket.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1acSKcpiibkro5pemrNtuYALBZK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,6 +41,7 @@
       <workItem from="1587297875673" duration="8142000" />
       <workItem from="1587314068929" duration="2141000" />
       <workItem from="1587324183601" duration="3759000" />
+      <workItem from="1588335741062" duration="1773000" />
     </task>
     <servers />
   </component>
@@ -39,6 +49,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588335748976">
+      <screen x="47" y="27" width="1873" height="1053" />
+    </state>
+    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/47.27.1873.1053@47.27.1873.1053" timestamp="1588335748976" />
     <state x="646" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1587311913921">
       <screen x="47" y="27" width="1873" height="1053" />
     </state>

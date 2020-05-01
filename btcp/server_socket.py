@@ -43,6 +43,7 @@ class BTCPServerSocket(BTCPSocket):
 
     # Send any incoming data to the application layer
     def recv(self):
+        #so I guess in here we need to check for the FIN flag to close the connection
         pass
 
     # Clean up any state
