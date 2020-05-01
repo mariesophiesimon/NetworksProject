@@ -34,46 +34,47 @@ class BTCPClientSocket(BTCPSocket):
         i = 0
         #need to receive x+1 and y
         while not response and i <= NUMBER_OF_TRIES:
-            while(self._timeout > 0):#waits for a response
+            while self._timeout > 0 and not response:#waits for a response
                 segment = self._queue.get()
                 response = True
                 self._sq = int.from_bytes(segment[:2], "big")
                 self._lastack = int.from_bytes(segment[2:4], "big")
                 if self._lastack == x+1:
-                    header = BTCPSocket.create_header(self, self._lastack, self._sq +1, 1, self._window, 0, 0)
-                    LossyLayer.send_segment(self._lossy_layer, header)
+                    header2 = BTCPSocket.create_header(self, self._lastack, self._sq +1, 1, self._window, 0, 0)
+                    LossyLayer.send_segment(self._lossy_layer, header2)
                     self._state = 2  # because from client side the handshake is done now
-                    print("CLient state 2")
             if not response:
                 LossyLayer.send_segment(self._lossy_layer, header)#if no response comes within the given time it tries again
                 i += 1
+        print("CLient state 2")
 
     # Send data originating from the application in a reliable way to the server
     def send(self, data):
         pass
 
-    # Clean up any state
-    def close(self):
-        self._lossy_layer.destroy()
-
     # Perform a handshake to terminate a connection
     def disconnect(self):
         header =BTCPSocket.create_header(self, self._lastack, self._sq +1, 4, self._window, 0, 0)
         LossyLayer.send_segment(self._lossy_layer, header)
+        print("trying to close client")
         #some state
         response = False
         i = 0
         while not response and i <= NUMBER_OF_TRIES:
-            while(self._timeout > 0):#waits for a response
+            while self._timeout > 0 and not response:#waits for a response
                 segment = self._queue.get()
                 response = True
                 flags = int.from_bytes(segment[4:5], "big")
                 if flags == 5:#if the ACK and FIN flag are set
-                    self.close(self)
+                    print("received response and can close")
             if not response:
                 LossyLayer.send_segment(self._lossy_layer, header)#tries sending again in case of no response
                 i += 1
-        self.close(self)#in case it never receives anything it still closes the connection
+
+    # Clean up any state
+    def close(self):
+        print("successfully closed client")
+        self._lossy_layer.destroy()
 
     # Called by the lossy layer from another thread whenever a segment arrives.
     def lossy_layer_input(self, segment, addr):

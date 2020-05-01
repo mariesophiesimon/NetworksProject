@@ -21,8 +21,8 @@ class BTCPServerSocket(BTCPSocket):
         self._lossy_layer = LossyLayer(self, SERVER_IP, SERVER_PORT, CLIENT_IP, CLIENT_PORT)
         self._queue = Queue()
         self._state = 0
-        self._sq = 0
-        self._lastack = 0
+        self._sq = 0#last sequence number sent
+        self._lastack = 0#last acknowledgement number received
 
     # Wait for the client to initiate a three-way handshake
     def accept(self):
@@ -44,10 +44,20 @@ class BTCPServerSocket(BTCPSocket):
     # Send any incoming data to the application layer
     def recv(self):
         #so I guess in here we need to check for the FIN flag to close the connection
-        pass
+        segment = self._queue.get()
+        sq = int.from_bytes(segment[:2], "big")
+        ack = int.from_bytes(segment[2:4], "big")
+        flags = int.from_bytes(segment[4:5], "big")
+        if flags >= 4 :#so if FIN flag is set (maybe also other flags)
+            print("received wish to close")
+            header = BTCPSocket.create_header(self, self._sq+1, sq+1, 5, self._window, 0, 0)
+            self._sq += 1
+            self._lastack = sq+1
+            LossyLayer.send_segment(self._lossy_layer, header)
 
     # Clean up any state
     def close(self):
+        print("successfully closed server")
         self._lossy_layer.destroy()
 
     # Called by the lossy layer from another thread whenever a segment arrives
