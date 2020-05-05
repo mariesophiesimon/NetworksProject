@@ -50,7 +50,21 @@ class BTCPClientSocket(BTCPSocket):
 
     # Send data originating from the application in a reliable way to the server
     def send(self, data):
-        pass
+        print(data)
+        print(type(data))
+        data_bytearray = bytearray(data, 'utf-8') #bytearray instead of bytes because we want it to be muteable
+        print(len(data_bytearray)) #16 for test.file, 2207 for test_lipsum.file
+
+        #create a byte segment of PAYLOAD_SIZE
+        #only yet implemented for <= PAYLOAD_SIZE; TODO: sending multiple segments for larger messages
+        padding_size = PAYLOAD_SIZE - len(data_bytearray)
+        if (padding_size >= 0):
+            padding = bytes(padding_size)
+            print(type(padding))
+            data_bytearray += padding
+            # data_bytearray.append(padding)
+        # pass
+        print(len(data_bytearray))
 
     # Perform a handshake to terminate a connection
     def disconnect(self):

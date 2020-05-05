@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="14497089-5f01-45d8-873f-024c5af676aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/input_lipsum.file" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/btcp/btcp_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/btcp_socket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/btcp/client_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/client_socket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/btcp/server_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/btcp/server_socket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +41,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -49,11 +69,34 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
+    <state x="557" y="142" width="1363" height="781" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588706653408">
+      <screen x="89" y="33" width="1831" height="1047" />
+    </state>
+    <state x="557" y="142" width="1363" height="781" key="#com.intellij.execution.impl.EditConfigurationsDialog/89.33.1831.1047@89.33.1831.1047" timestamp="1588706653408" />
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588335748976">
       <screen x="47" y="27" width="1873" height="1053" />
     </state>
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/47.27.1873.1053@47.27.1873.1053" timestamp="1588335748976" />
+    <state x="263" y="33" key="SettingsEditor" timestamp="1588705603895">
+      <screen x="89" y="33" width="1831" height="1047" />
+    </state>
+    <state x="263" y="33" key="SettingsEditor/89.33.1831.1047@89.33.1831.1047" timestamp="1588705603895" />
+    <state x="89" y="33" width="865" height="1047" key="find.popup" timestamp="1588711745760">
+      <screen x="89" y="33" width="1831" height="1047" />
+    </state>
+    <state x="89" y="33" width="865" height="1047" key="find.popup/89.33.1831.1047@89.33.1831.1047" timestamp="1588711745760" />
     <state x="646" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1587311913921">
       <screen x="47" y="27" width="1873" height="1053" />
     </state>
