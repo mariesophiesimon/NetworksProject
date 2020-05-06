@@ -11,13 +11,19 @@ def main():
     parser.add_argument("-i", "--input", help="File to send", default="input.file")
     args = parser.parse_args()
 
+    #obtain the input from the input file
+    file = open(args.input)
+    message=file.read()
+    # print(message)
+
     # Create a bTCP client socket with the given window size and timeout value
     s = BTCPClientSocket(args.window, args.timeout)
     # TODO Write your file transfer clientcode using your implementation of BTCPClientSocket's connect, send, and disconnect methods.
     s.connect()
-    s.disconnect()
+    s.send(message)
+    # s.disconnect()
     # Clean up any state
-    s.close()
+    # s.close()
 
 
 main()

@@ -48,9 +48,35 @@ class BTCPClientSocket(BTCPSocket):
                 i += 1
         print("CLient state 2")
 
+
     # Send data originating from the application in a reliable way to the server
     def send(self, data):
-        pass
+        segments = self.prepare_data(data)
+        print('The input data has been put into {} segments'.format(len(segments)))
+        print('The length of segment 0 should be {} and is {}'.format(PAYLOAD_SIZE,len(segments[0])))
+        #create a byte segment of PAYLOAD_SIZE
+        #only yet implemented for <= PAYLOAD_SIZE; TODO: sending multiple segments for larger messages
+
+    # returns a list of data sections, each containing exactly 1008 bytes
+    def prepare_data(self, data):
+        data_sections = []
+        data_bytearray = bytearray(data, 'utf-8')  # bytearray instead of bytes because we want it to be muteable
+        print('The length in bytes before processing is {0}'.format(len(data_bytearray)))  # 16 for test.file, 2207 for test_lipsum.file
+
+        while len(data_bytearray) > PAYLOAD_SIZE:
+            data_sections.append(data_bytearray[:PAYLOAD_SIZE])
+            data_bytearray = data_bytearray[PAYLOAD_SIZE:]
+
+        # note: len(data_bytearray) <= PAYLOAD_SIZE
+        # Possibly add padding to reach the PAYLOAD_SIZE
+        padding_size = PAYLOAD_SIZE - len(data_bytearray)
+        padding = bytes(padding_size)  # this creates the right amount of 'zero bytes'
+        data_bytearray += padding
+
+        data_sections.append(data_bytearray)
+        return data_sections
+
+
 
     # Perform a handshake to terminate a connection
     def disconnect(self):

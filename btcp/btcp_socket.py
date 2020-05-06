@@ -8,7 +8,7 @@ class BTCPSocket:
     # Return the Internet checksum of data
     @staticmethod
     def in_cksum(data):
-        #checksum from my code of week 2
+        #checksum from Marie's code of week 2
         sum = 0
         for x in range(0, len(data), 2):#from 0 to length of data in steps of 2
             if(x+1 <= len(data)):
