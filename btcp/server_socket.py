@@ -22,38 +22,57 @@ class BTCPServerSocket(BTCPSocket):
         self._queue = Queue()
         self._state = 0
         self._sq = 0#last sequence number sent
+        self._recv = 0#last sequence number received
         self._lastack = 0#last acknowledgement number received
+        self._clientwindow = 0
+        self._padding = bytearray(bytes(1008))
 
     # Wait for the client to initiate a three-way handshake
     def accept(self):
         segment = self._queue.get()
-        x = int.from_bytes(segment[:2], "big")
-        y = random.randint(0, 65535)
-        header = BTCPSocket.create_header(self, y, x + 1, 3, self._window, 0, 0)
-        LossyLayer.send_segment(self._lossy_layer, header)
-        self._lastack = x+1
-        self._sq = y
+        self._recv = int.from_bytes(segment[:2], "big")
+        self._sq = random.randint(0, 65535)
+        packet = BTCPSocket.create_packet(self, self._sq, self._recv + 1, 3, self._window, 0, 0, self._padding)
+        LossyLayer.send_segment(self._lossy_layer, packet)
+        self._lastack = self._recv +1
         segment = self._queue.get()
         x = int.from_bytes(segment[:2], "big")
         y = int.from_bytes(segment[2:4], "big")
-        if self._lastack == x and self._sq+1 == y:
+        self._clientwindow = int.from_bytes(segment[5:6], "big")
+        if self._lastack == x and self._sq + 1 == y:
             self._state = 2
+            self._lastack = y
+            self._recv = x
             print("Server state 2")
         #a client has successfully connected
 
     # Send any incoming data to the application layer
     def recv(self):
         #so I guess in here we need to check for the FIN flag to close the connection
-        segment = self._queue.get()
-        sq = int.from_bytes(segment[:2], "big")
-        ack = int.from_bytes(segment[2:4], "big")
-        flags = int.from_bytes(segment[4:5], "big")
-        if flags >= 4 :#so if FIN flag is set (maybe also other flags)
-            print("received wish to close")
-            header = BTCPSocket.create_header(self, self._sq+1, sq+1, 5, self._window, 0, 0)
-            self._sq += 1
-            self._lastack = sq+1
-            LossyLayer.send_segment(self._lossy_layer, header)
+        try:
+            # Opt 1: Handle task here and call q.task_done()
+            segment = self._queue.get()
+            sq = int.from_bytes(segment[:2], "big")
+            self._lastack = int.from_bytes(segment[2:4], "big")
+            flags = int.from_bytes(segment[4:5], "big")
+            if flags >= 4:  # so if FIN flag is set (maybe also other flags)
+                print("received wish to close")
+                self._sq += 1
+                packet = BTCPSocket.create_packet(self, self._sq, sq + 1, 5, self._window, 0, 0,self._padding)
+                LossyLayer.send_segment(self._lossy_layer, packet)
+                return False
+            else:  # every normal packet that does not finish the connection
+                print("I have recieved a normal package")
+                message = segment[10:]
+                print(message)
+                self._sq += 1
+                packet = BTCPSocket.create_packet(self, self._sq, sq +1, flags, self._window, 0, 0, self._padding)
+                LossyLayer.send_segment(self._lossy_layer, packet)
+                return True
+        except Queue.Empty:
+            # Handle empty queue here
+            print("nothing received")
+            pass
 
     # Clean up any state
     def close(self):

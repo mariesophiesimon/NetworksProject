@@ -8,22 +8,23 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-w", "--window", help="Define bTCP window size", type=int, default=100)
     parser.add_argument("-t", "--timeout", help="Define bTCP timeout in milliseconds", type=int, default=100)
-    parser.add_argument("-i", "--input", help="File to send", default="input.file")
+    #parser.add_argument("-i", "--input", help="File to send", default="input.file")
+    parser.add_argument("-i", "--input", help="File to send", default="input_lipsum.file")
     args = parser.parse_args()
 
     #obtain the input from the input file
     file = open(args.input)
     message=file.read()
-    # print(message)
+    #print(message)
 
     # Create a bTCP client socket with the given window size and timeout value
     s = BTCPClientSocket(args.window, args.timeout)
     # TODO Write your file transfer clientcode using your implementation of BTCPClientSocket's connect, send, and disconnect methods.
     s.connect()
     s.send(message)
-    # s.disconnect()
+    s.disconnect()
     # Clean up any state
-    # s.close()
+    s.close()
 
 
 main()
