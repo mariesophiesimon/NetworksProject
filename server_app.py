@@ -17,6 +17,7 @@ def main():
     s.accept()
     while s.recv():
         pass
+    print(s._message.decode("utf-8"))
     # Clean up any state
     s.close()
 
