@@ -61,24 +61,21 @@ class BTCPClientSocket(BTCPSocket):
     def send(self, data):
         segments, length = self.prepare_data(data)
         startSQ = self._sq
-        freebuffer = self._serverwindow
         #create a byte segment of PAYLOAD_SIZE
         for i in range(0, len(segments)):
-            if freebuffer > 0:
-                if i == len(segments)-1:
+            if self._serverwindow > 0:
+                if i == len(segments)-1:#only for the last segment do we need to change the datalenght
                     datal = length
                 else:
                     datal = PAYLOAD_SIZE
                 packet = BTCPSocket.create_packet(self, self._sq + 1, self._recv + i, 1, self._window, datal, 0, segments[i])
                 LossyLayer.send_segment(self._lossy_layer, packet)
-                freebuffer -= 1
+                self._serverwindow -= 1
             try:
                 response = self._queue.get(timeout=self._timeout)
+                self._serverwindow = int.from_bytes(response[5:6], "big")
                 ack = int.from_bytes(response[2:4], "big")
-                if ack == self._lastack + 1:
-                    #everything is fine
-                    freebuffer += 1  # because that means server buffer is free again
-                else:
+                if ack != self._lastack + 1:#apparently it did not receive the packets in order
                     #it needs to resend from the package on that has not been acknowledged yet
                     i = ack - startSQ
                 # somehow have to compare which sequence number he acknowledged so that it is still in order
